@@ -15,16 +15,14 @@ class CreateMyColleaguesTable extends Migration
     {
         Schema::create('my_colleagues', function (Blueprint $table) {
             $table->id();
-            $table->string('office_name');
-            $table->string('office_address');
-            $table->string('office_phone');
-            $table->string('appointment_letter');
+            $table->string('uuid');
+            $table->unsignedBigInteger('office_id');
             $table->string('colleague_name');
             $table->string('colleague_address');
-            $table->string('colleague_mobile');
-            $table->string('appointment_letter');
+            $table->string('colleague_mobile', 24);
             $table->string('photo');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
