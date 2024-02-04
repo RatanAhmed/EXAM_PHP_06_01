@@ -51,7 +51,7 @@ class MyColleagueController extends Controller
         $validated = $request->validate([
             'office_name' => 'required|string|max:255',
             'office_address' => 'required|string|max:255',
-            'office_phone' => 'required|string|max:255',
+            'office_phone' => 'required|string|max:24',
         ]);
         
         if(isset($request->id)){
