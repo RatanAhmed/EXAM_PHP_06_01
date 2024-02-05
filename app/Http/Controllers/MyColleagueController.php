@@ -17,11 +17,11 @@ class MyColleagueController extends Controller
             $data = Office::all();
             return DataTables::of($data)
                     ->addIndexColumn()
-                    
+
                     ->editColumn('no_of_colleague', function($data) {
                        return $data->colleaguesCount();
                     })
-                    
+
                     ->addColumn('action', function($data){
                         $btn = ' <a href="'.route('colleagues.show', $data->id ).'" class="btn btn-sm btn-success rounded editBtn"><i class="bi bi-pencil-square"></i> View </a>';
                         $btn .= ' <a href="'.route('colleagues.edit', $data->id ).'" class="btn btn-sm btn-warning rounded editBtn"><i class="bi bi-pencil-square"></i> Edit</a>';
@@ -53,7 +53,7 @@ class MyColleagueController extends Controller
             'office_address' => 'required|string|max:255',
             'office_phone' => 'required|string|max:24',
         ]);
-        
+
         if(isset($request->id)){
             $office = Office::find($request->id);
         }else{
@@ -64,7 +64,7 @@ class MyColleagueController extends Controller
             $office->appointment_letter = $this->saveFile($request->file('appointment_letter'));
         }
         if($office->save()){
-            
+
             try{
                 foreach($request->colleague_name as $key => $colleague_name){
                     if(isset($request->uuid)){
@@ -72,7 +72,7 @@ class MyColleagueController extends Controller
                     }else{
                         $colleague = new MyColleague;
                     }
-                  
+
                     $colleague->office_id = $office->id;
                     $colleague->colleague_name = $colleague_name;
                     $colleague->colleague_address = $request->colleague_address[$key];
@@ -118,7 +118,7 @@ class MyColleagueController extends Controller
     }
 
     private function saveFile($file): string
-    {   
+    {
         $fileName = Str::random(15) . '.' . $file->getClientOriginalExtension();
         $path = 'colleague/photo'.'/'.$fileName;
         Storage::disk('public')->put($path, $file, 'public');
